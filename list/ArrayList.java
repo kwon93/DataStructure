@@ -12,8 +12,28 @@ public class ArrayList {
         return true;
     }
 
-    public boolean add(int idx,Object element){
-        elementData[idx] = element;
+    public boolean addFirst(Object element){
+        return add(0, element); //add()를 활용해 간단하게 구현. 0번 idx값을 고정적으로 보냄. first니까
+    }
+
+    public boolean add(int idx , Object element){
+        for (int i = size-1; i >= idx; i--) { //마지막 인덱스번호가 idx 입력값까지 같아질 때 까지 반복문 수행
+            elementData[i+1] = elementData[i]; //해당 요소의 인덱스를 1씩 올려줌으로서 공간을 만들어준다.
+        }
+        elementData[idx] = element; // 새로 들어오게된 입력값을 빈 인덱스자리에 넣어준다.
+        size++; //마지막으로 arrayList의 크기를 늘려줌.
         return true;
+    }
+
+    @Override
+    public String toString() {
+        String str = "[";
+        for (int i = 0; i < size; i++) {
+            str += elementData[i];
+            if(i < size -1){ //마지막 인덱스보다 i가 작다면 "," 를 붙임.
+                str += ",";
+            }
+        }
+        return str+"]";
     }
 }
