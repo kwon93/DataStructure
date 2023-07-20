@@ -1,5 +1,7 @@
 package list;
 
+import java.util.ListIterator;
+
 //ArrayList Implementation
 public class ArrayList {
     private int size = 0; //몇개의 데이터가 list에 들어가있는지 나타내는 필드값.
@@ -35,5 +37,72 @@ public class ArrayList {
             }
         }
         return str+"]";
+    }
+
+    public Object remove(int idx){
+        Object removed = elementData[idx]; //삭제하기전에 삭제하려는값을 옮겨둔다.
+        for (int i = idx +1; i < size -1 ; i++) {
+            elementData[i -1] = elementData[i];
+        }
+        size--;
+        elementData[size] = null;
+        return removed; // 삭제 메서드는 삭제했던 값을 return해야 한다.
+    }
+
+    public Object removeFirst(){
+        return remove(0);
+    }
+
+    public Object removeLast(){
+        return remove(size-1);
+    }
+
+    public Object get(int idx){
+        return elementData[idx]; //ArrayList 의 장점, 배열의 index로 접근하기때문에 데이터를 조회할때 빠르다.
+    }
+
+    public int size(){
+        return size; //변수로 직접 접근하지못하게 막고 메서드를 사용
+    }
+
+    public int indexOf(Object o){
+        for (int i = 0; i < size ; i++) {
+            if(elementData[i] == o){
+                return i;
+            }
+        }
+        return -1; //찾는값이 없을 때
+    }
+
+    public ListIterator listIterator(){
+        return new ListIterator();
+    }
+
+    class ListIterator{
+        private int nextIdx = 0;
+        public boolean hasNext(){
+
+            return nextIdx < size;
+        }
+        public Object next(){
+            return elementData[nextIdx++];
+        }
+
+        public Object previous(){
+            return elementData[--nextIdx];
+        }
+
+        public boolean hasPrevious(){
+            return nextIdx > 0; //nextIdx가 0보다 크다면 true가 출력
+        }
+
+        public void add(Object element){
+            ArrayList.this.add(nextIdx++,element);
+        }
+
+        public void remove(Object element){
+            ArrayList.this.remove(nextIdx-1);
+            nextIdx--;
+        }
     }
 }
