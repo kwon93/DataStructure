@@ -2,6 +2,8 @@ package interface_form.list;
 
 import interface_form.List;
 
+import java.util.NoSuchElementException;
+
 public class SinglyLinkedList<E> implements List<E> {
 
     private Node<E> head; //노드 첫부분
@@ -102,15 +104,100 @@ public class SinglyLinkedList<E> implements List<E> {
 
     }
 
+    public E remove() {
+        Node<E> headNode = head;
+        if (headNode == null) {
+            throw new NoSuchElementException();
+        }
+        E element = headNode.data; //삭제하기전 노드를 반환하기위한 임시 변수
+
+        Node<E> nextNode = head.next; // head의 다음 노드
+
+        head.data = null;
+        head.next = null;
+
+        head = nextNode;
+        size--;
+
+        /**
+         * 삭제된 요소가 리스트의 유일한 요소였을 경우
+         * 그 요소는 head이자 tail이었으므로
+         * 삭제되면서 tail도 가리킬 요소가 없기에
+         * size가 0일 경우 tail도 null로 변환
+         */
+        if (size == 0) {
+            tail = null;
+        }
+        return element;
+    }
+
     @Override
-    public E remove(int index) {
-        return null;
+    public E remove(int index){
+        //삭제하려는 노드의 인덱스가 첫번째인 경우
+        if (index == 0){
+            remove();
+        }
+
+        if (index >= size || index < 0){
+            throw new IndexOutOfBoundsException();
+        }
+        Node<E> prevNode = search(index - 1); //삭제하는 노드의 전 노드
+        Node<E> removeNode = prevNode.next; // 삭제하려는 노드
+        Node<E> nextNode = removeNode.next; // 삭제 노드의 next 노드
+
+        E element = removeNode.data;
+
+        prevNode.next = nextNode; //링크 연결
+
+        //삭제노드가 마지막 노드였다면 tail을 prev로 갱신
+        if (removeNode.next == null){
+            tail = prevNode;
+        }
+
+        //최종 삭제 진행
+        removeNode.data = null;
+        removeNode.next = null;
+        size--;
+
+        return element;
+
     }
 
     @Override
     public boolean remove(Object value) {
+        if (value == null) {
+            return false;
+        }
+
+        Node<E> prevNode = null;
+        Node<E> x = head;
+
+        // value 와 일치하는 노드를 찾는다.
+        while (x != null) {
+            if (value.equals(x.data)) {
+                if (prevNode == null) {
+                    // 첫 번째 노드였을 경우
+                    head = x.next;
+                } else {
+                    // 중간 또는 마지막 노드였을 경우
+                    prevNode.next = x.next;
+                }
+                // 삭제된 노드가 마지막 노드인 경우 tail 업데이트
+                if (x.next == null) {
+                    tail = prevNode;
+                }
+                x.next = null;
+                x.data = null;
+                size--;
+                return true;
+            }
+            prevNode = x;
+            x = x.next;
+        }
         return false;
     }
+
+
 
     @Override
     public E get(int index) {
