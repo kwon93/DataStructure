@@ -38,8 +38,7 @@ public class ArrayList<E> implements List<E>, Cloneable {
         //용량이 꽉 찰 경우
         if (size == arrayCapacity){
             int newCapacity = arrayCapacity * 2;
-            int a = 1;
-            a = 2;
+
 
             array = Arrays.copyOf(array, newCapacity);
             return;
