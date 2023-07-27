@@ -3,7 +3,7 @@ package list;
 import java.util.ListIterator;
 
 //ArrayList Implementation
-public class ArrayList {
+public class ArrayList<T> {
     private int size = 0; //몇개의 데이터가 list에 들어가있는지 나타내는 필드값.
     private Object[] elementData = new Object[100]; //JCF같은 경우는 배열의 크기는 자동으로 커지도록 프로그래밍되있음. 자동으로 크기를 늘리는 성질은 List의 본래 속성은 아님.
 

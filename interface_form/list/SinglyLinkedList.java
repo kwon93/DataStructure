@@ -100,7 +100,7 @@ public class SinglyLinkedList<E> implements List<E> {
         prevNode.next = newNode;
         newNode.next = nextNode;
         size++;
-        
+
 
     }
 
@@ -165,36 +165,44 @@ public class SinglyLinkedList<E> implements List<E> {
 
     @Override
     public boolean remove(Object value) {
-        if (value == null) {
+
+        Node<E> prevNode = head;
+        boolean hasValue = false;
+        Node<E> x = head;	// removedNode
+
+        // value 와 일치하는 노드를 찾는다.
+        for (; x != null; x = x.next) {
+            if (value.equals(x.data)) {
+                hasValue = true;
+                break;
+            }
+            prevNode = x;
+        }
+
+        // 일치하는 요소가 없을 경우 false 반환
+        if(x == null) {
             return false;
         }
 
-        Node<E> prevNode = null;
-        Node<E> x = head;
-
-        // value 와 일치하는 노드를 찾는다.
-        while (x != null) {
-            if (value.equals(x.data)) {
-                if (prevNode == null) {
-                    // 첫 번째 노드였을 경우
-                    head = x.next;
-                } else {
-                    // 중간 또는 마지막 노드였을 경우
-                    prevNode.next = x.next;
-                }
-                // 삭제된 노드가 마지막 노드인 경우 tail 업데이트
-                if (x.next == null) {
-                    tail = prevNode;
-                }
-                x.next = null;
-                x.data = null;
-                size--;
-                return true;
-            }
-            prevNode = x;
-            x = x.next;
+        // 만약 삭제하려는 노드가 head라면 기존 remove()를 사용
+        if (x.equals(head)) {
+            remove();
+            return true;
         }
-        return false;
+
+        else {
+            // 이전 노드의 링크를 삭제하려는 노드의 다음 노드로 연결
+            prevNode.next = x.next;
+
+            // 만약 삭제했던 노드가 마지막 노드라면 tail을 prevNode로 갱신
+            if(prevNode.next == null) {
+                tail = prevNode;
+            }
+            x.data = null;
+            x.next = null;
+            size--;
+            return true;
+        }
     }
 
 
@@ -221,7 +229,7 @@ public class SinglyLinkedList<E> implements List<E> {
 
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     @Override

@@ -20,8 +20,7 @@ public class App {
         linkedList.add("b");
         linkedList.add("c");
         linkedList.remove("c");
-        System.out.println(linkedList.size());
-
+        System.out.println("size : "+linkedList.size());
 
 
     }
