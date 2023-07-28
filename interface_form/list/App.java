@@ -21,6 +21,10 @@ public class App {
         linkedList.add("c");
         linkedList.remove("c");
         System.out.println("size : "+linkedList.size());
+        String s = linkedList.get(1);
+        System.out.println(s);
+        System.out.println(linkedList.contains("b"));
+        System.out.println(linkedList.indexOf("c"));
 
 
     }

@@ -168,7 +168,7 @@ public class SinglyLinkedList<E> implements List<E> {
 
         Node<E> prevNode = head;
         boolean hasValue = false;
-        Node<E> x = head;	// removedNode
+        Node<E> x = head;    // removedNode
 
         // value 와 일치하는 노드를 찾는다.
         for (; x != null; x = x.next) {
@@ -209,22 +209,33 @@ public class SinglyLinkedList<E> implements List<E> {
 
     @Override
     public E get(int index) {
-        return null;
+        return search(index).data;
     }
 
     @Override
-    public void set(int index, E vlaue) {
-
+    public void set(int index, E value) {
+        Node<E> search = search(index);
+        search.data = null;
+        search.data = value;
     }
 
     @Override
-    public boolean contains(Object vlaue) {
-        return false;
+    public boolean contains(Object value) {
+        return indexOf(value) >= 0;
     }
 
     @Override
     public int indexOf(Object value) {
-        return 0;
+        int index = 0;
+
+        for (Node<E> x = head; x != null ; x = x.next) {
+            if (value.equals(x.data)){
+                return index;
+            }
+            index++;
+        }
+
+        return -1;
     }
 
     @Override
@@ -234,11 +245,17 @@ public class SinglyLinkedList<E> implements List<E> {
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return size == 0;
     }
 
     @Override
     public void clear() {
-
+        for (Node<E> x = head; x != null;) {
+            Node<E> nextNode = x.next;
+            x.data = null;
+            x.next = null;
+        }
+        head = tail = null;
+        size = 0;
     }
 }
