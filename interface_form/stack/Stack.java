@@ -1,9 +1,11 @@
 package interface_form.stack;
 
+import interface_form.list.ArrayList;
+
 import java.util.Arrays;
 import java.util.EmptyStackException;
 
-public class Stack<E> implements interface_form.Stack<E> {
+public class Stack<E> extends ArrayList<E> implements interface_form.Stack<E> {
 
     private static final int DEFAULT_CAPACITY = 10;
     private static final Object[] EMPTY_ARRAY = {};
@@ -17,11 +19,14 @@ public class Stack<E> implements interface_form.Stack<E> {
         this.size = 0;
     }
 
+
     //공간할당을 하며 초기화 할때
     public Stack(int capacity){
         this.array = new Object[capacity];
         this.size = 0;
     }
+
+
 
     private void resize(){
 
