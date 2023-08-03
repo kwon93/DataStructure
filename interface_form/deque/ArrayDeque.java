@@ -152,10 +152,13 @@ public class ArrayDeque<E> implements Queue<E> {
 
         return item;
     }
+    
 
 
     @Override
     public E peek() {
-        return null;
+        return peekFirst();
     }
+
+
 }
