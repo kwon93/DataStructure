@@ -160,5 +160,73 @@ public class ArrayDeque<E> implements Queue<E> {
         return peekFirst();
     }
 
+    public E peekFirst(){
+        if (size == 0){
+            return null;
+        }
+
+        @SuppressWarnings("unchecked")
+        E item = (E) array[(front + 1) & array.length];
+        return item;
+    }
+
+    public E peekLast(){
+        if (size == 0){
+            return null;
+        }
+        @SuppressWarnings("unchecked")
+        E item = (E) array[(rear)];
+        return item;
+    }
+
+    public E element(){
+        return getFirst();
+    }
+
+    public E getFirst(){
+        E item = peek();
+
+        if (item == null){
+            throw new NoSuchElementException();
+        }
+        return item;
+    }
+
+    public E getLast(){
+        E item = peekLast();
+
+        if (item == null){
+            throw new NoSuchElementException();
+        }
+        return item;
+    }
+
+    public int size(){
+        return size;
+    }
+
+    public boolean isEmpty(){
+        return size == 0;
+    }
+
+    public boolean contains(Object value){
+
+        int start = (front + 1) % array.length;
+
+        for(int i = 0, idx = start; i < size; i++, idx = (idx + 1) % array.length) {
+            if(array[idx].equals(value)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void clear(){
+        for (int i = 0; i < array.length; i++){
+            array[i] = null;
+        }
+
+        front = rear = size = 0;
+    }
 
 }
