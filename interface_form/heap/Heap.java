@@ -93,12 +93,42 @@ public class Heap<E> {
     private void siftUpComparator(int idx,E target,Comparator<? super E> comp){
 
         //root노드보다 클 때 까지만 탐색한다.
+        while (idx > 1){
+            int parent = getParent(idx);
+            Object parentValue = array[parent];
+
+            //타겟 노드값이 부모 노드보다 크면 반복문 종료
+            if (comp.compare(target,(E) parentValue) >= 0){
+                break;
+            }
+
+            array[idx] = parentValue;
+            idx = parent;
+        }
+
+        array[idx] = target;
 
 
 
     }
 
-    private void siftUpComparable(int idx, E target){
+    // 삽입 할 객체의 Comparable을 이용한 sift-up
+    @SuppressWarnings("unchecked")
+    private void siftUpComparable(int idx, E target) {
 
+        // 타겟노드가 비교 될 수 있도록 한 변수를 만든다.
+        Comparable<? super E> comp = (Comparable<? super E>) target;
+
+        while(idx > 1) {
+            int parent = getParent(idx);
+            Object parentVal = array[parent];
+
+            if(comp.compareTo((E)parentVal) >= 0) {
+                break;
+            }
+            array[idx] = parentVal;
+            idx = parent;
+        }
+        array[idx] = comp;
     }
 }
